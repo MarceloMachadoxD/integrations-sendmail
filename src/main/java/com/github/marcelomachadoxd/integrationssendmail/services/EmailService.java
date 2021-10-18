@@ -1,6 +1,7 @@
 package com.github.marcelomachadoxd.integrationssendmail.services;
 
 import com.github.marcelomachadoxd.integrationssendmail.dto.EmailDTO;
+import com.github.marcelomachadoxd.integrationssendmail.services.exceptions.EmailExceptions;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -39,12 +40,13 @@ public class EmailService {
             Response response = sendGrid.api(request);
             if (response.getStatusCode() >= 400 && response.getStatusCode() <= 500) {
                 LOG.error("error sending email " + response.getBody());
-            } else {
-                LOG.info(response.getStatusCode() + "Email sent");
+                throw  new EmailExceptions(response.getBody());
             }
+                LOG.info(response.getStatusCode() + "Email sent");
+
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw  new EmailExceptions(e.getMessage());
         }
     }
 
