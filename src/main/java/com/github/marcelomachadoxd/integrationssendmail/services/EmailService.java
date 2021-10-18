@@ -31,19 +31,19 @@ public class EmailService {
 
         Request request = new Request();
 
-        try{
-           request.setMethod(Method.POST);
-           request.setEndpoint("mail/send");
-           request.setBody(mail.build());
-           LOG.info("sending e-mail to " + dto.getTo());
-           Response response = sendGrid.api(request);
-           if (response.getStatusCode() >= 400 && response.getStatusCode() <=500){
-               LOG.error("error sending email " + response.getBody());
-           } else {
-               LOG.info(response.getStatusCode() + "Email sent");
-           }
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            LOG.info("sending e-mail to " + dto.getTo());
+            Response response = sendGrid.api(request);
+            if (response.getStatusCode() >= 400 && response.getStatusCode() <= 500) {
+                LOG.error("error sending email " + response.getBody());
+            } else {
+                LOG.info(response.getStatusCode() + "Email sent");
+            }
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
